@@ -1,21 +1,10 @@
 const express = require("express");
 const { WebSocketServer } = require("ws");
-const { spawn, spawnSync } = require("child_process");
+const { spawn } = require("child_process");
 const http = require("http");
 const path = require("path");
 
-// Compile Java files before starting the server
 const javaDir = path.join(__dirname, "java");
-console.log("Compiling Java files...");
-const compile = spawnSync("javac", ["*.java"], {
-    cwd: javaDir,
-    stdio: "inherit",
-});
-if (compile.status !== 0) {
-    console.error("Java compilation failed. Exiting.");
-    process.exit(1);
-}
-console.log("Compilation successful.");
 
 const app = express();
 const server = http.createServer(app);
