@@ -9,7 +9,7 @@ RUN npm install
 
 COPY . .
 
-RUN javac java/*.java
+RUN javac -encoding UTF-8 java/*.java
 
 EXPOSE 3000
 
