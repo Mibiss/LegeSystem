@@ -1,14 +1,14 @@
 import java.util.*;
 import java.io.*;
 
-public class Legesystem {
+public class LegeSystem {
     IndeksertListe<Legemiddel> legemidler;
     IndeksertListe<Resept> resepter;
     IndeksertListe<Lege> leger;
     IndeksertListe<Pasient> pasienter;
-    private static Legesystem legesystem;
+    private static LegeSystem legesystem;
 
-    public Legesystem() {
+    public LegeSystem() {
         legemidler = new IndeksertListe<>();
         resepter = new IndeksertListe<>();
         leger = new IndeksertListe<>();
@@ -16,7 +16,7 @@ public class Legesystem {
     }
 
     public static void main(String[] args) throws FileNotFoundException, UlovligUtskrift {
-        legesystem = new Legesystem();
+        legesystem = new LegeSystem();
         legesystem.LesInnFil("legedata.txt");
         grenseSnitt();
     }

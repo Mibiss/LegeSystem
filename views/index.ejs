@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LegeSystem</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm/css/xterm.css" />
+    <link rel="stylesheet" href="/terminal.css">
+</head>
+<body>
+
+    <nav>
+        <span class="nav-name">Mihail Paladi</span>
+        <ul>
+            <li><a href="https://mibiss.github.io">Portfolio</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="hero">
+            <h1>LegeSystem</h1>
+            <p class="subtitle">Medical prescription management system</p>
+        </section>
+        <section id="demo">
+            <h2>Live Demo</h2>
+            <p class="demo-note">Type a number and press Enter to navigate the menu. Each visit starts a fresh session.</p>
+            <div class="terminal-card">
+                <div class="terminal-header">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                    <span class="terminal-title">LegeSystem - Java</span>
+                </div>
+                <div id="terminal"></div>
+            </div>
+            <button id="restart-btn">Restart Session</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>Mihail Paladi &copy; 2026</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit/lib/xterm-addon-fit.js"></script>
+    <script>
+        const term = new Terminal({
+            cursorBlink: true,
+            theme: {
+                background: "#1a1a1a",
+                foreground: "#d4d4d4",
+                cursor: "#ffffff",
+            },
+            fontFamily: "'Courier New', monospace",
+            fontSize: 14,
+            lineHeight: 1.4,
+        });
+
+        const fitAddon = new FitAddon.FitAddon();
+        term.loadAddon(fitAddon);
+        term.open(document.getElementById("terminal"));
+        fitAddon.fit();
+
+        window.addEventListener("resize", () => fitAddon.fit());
+
+        let ws;
+        let inputBuffer = "";
+        let keyListener = null;
+
+        function connect() {
+            if (keyListener) {
+                keyListener.dispose();
+                keyListener = null;
+            }
+
+            const protocol = location.protocol === "https:" ? "wss" : "ws";
+            ws = new WebSocket(`${protocol}://${location.host}`);
+
+            ws.onopen = () => {
+                term.clear();
+                term.writeln("Connecting to LegeSystem...\r\n");
+            };
+
+            ws.onmessage = (event) => {
+                const msg = JSON.parse(event.data);
+                if (msg.type === "output") {
+                    term.write(msg.data.replace(/\n/g, "\r\n"));
+                } else if (msg.type === "exit") {
+                    term.writeln("\r\n[Session ended — click Restart to begin again]");
+                }
+            };
+
+            ws.onclose = () => {
+                term.writeln("\r\n[Disconnected]");
+            };
+
+            keyListener = term.onKey(({ key, domEvent }) => {
+                const code = domEvent.keyCode;
+                if (code === 13) {
+                    term.write("\r\n");
+                    ws.send(JSON.stringify({ type: "input", data: inputBuffer + "\n" }));
+                    inputBuffer = "";
+                } else if (code === 8) {
+                    if (inputBuffer.length > 0) {
+                        inputBuffer = inputBuffer.slice(0, -1);
+                        term.write("\b \b");
+                    }
+                } else {
+                    inputBuffer += key;
+                    term.write(key);
+                }
+            });
+        }
+
+        document.getElementById("restart-btn").addEventListener("click", () => {
+            if (ws) ws.close();
+            inputBuffer = "";
+            connect();
+        });
+
+        connect();
+    </script>
+</body>
+</html>

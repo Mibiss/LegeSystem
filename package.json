@@ -1,0 +1,26 @@
+{
+  "name": "legesystem",
+  "version": "1.0.0",
+  "description": "LegeSystem was collaborated with 2 other people.\r Combined multiple topics from earlier in the semester.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mibiss/LegeSystem.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Mibiss/LegeSystem/issues"
+  },
+  "homepage": "https://github.com/Mibiss/LegeSystem#readme",
+  "dependencies": {
+    "ejs": "^5.0.1",
+    "express": "^5.2.1",
+    "ws": "^8.20.0"
+  }
+}
