@@ -83,23 +83,22 @@ public abstract class Lenkeliste<E> implements Liste<E> {
     }
 
     class LenkelisteIterator implements Iterator<E> {
-        private Lenkeliste<E> iterator;
-        private int gjeldendeIndeks = 0;
         private Node noden;
 
         public LenkelisteIterator(Lenkeliste<E> liste) {
-            iterator = liste;
             noden = start;
         }
 
         @Override
         public boolean hasNext() {
-            return gjeldendeIndeks < stoerrelse();
+            return noden != null;
         }
 
         @Override
         public E next() {
-            return (hent(gjeldendeIndeks++));
+            E verdi = noden.verdi;
+            noden = noden.neste;
+            return verdi;
         }
     }
 }
