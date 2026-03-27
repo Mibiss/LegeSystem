@@ -43,23 +43,23 @@ public class LegeSystem {
     public static void grenseSnitt() {
         int input = 0;
         while (input != 5) {
-            System.out.println("Vennligst velg input:");
-            System.out.println("1: Skriv ut fullstendig oversikt over pasienter, leger, legemidler og resepter.");
-            System.out.println("2: Opprett og legg til nye elementer i systemet.");
-            System.out.println("3: Bruk en gitt resept fra listen til en pasient.");
-            System.out.println("4: Skriv ut forskjellige former for statistikk.");
+            System.out.println("Please select an option:");
+            System.out.println("1: Print a complete overview of patients, doctors, medicines and prescriptions.");
+            System.out.println("2: Create and add new elements to the system.");
+            System.out.println("3: Use a given prescription from the list for a patient.");
+            System.out.println("4: Print various forms of statistics.");
             System.out.println("5: Exit");
             input = scanner.nextInt();
             if (input == 1) {
                 printInfo();
             }
             if (input == 2) {
-                System.out.println("Vennligst velg input.");
-                System.out.println("1. Legg til en lege.");
-                System.out.println("2. Legg til et legemiddel.");
-                System.out.println("3. Legg til en pasient.");
-                System.out.println("4. Legg til en resept.");
-                System.out.println("5. Tilbake til menyen.");
+                System.out.println("Please select an option.");
+                System.out.println("1. Add a doctor.");
+                System.out.println("2. Add a medicine.");
+                System.out.println("3. Add a patient.");
+                System.out.println("4. Add a prescription.");
+                System.out.println("5. Back to the menu.");
                 int nyinput = scanner.nextInt();
                 if (nyinput == 1) {
                     leggTilLege();
