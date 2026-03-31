@@ -44,6 +44,8 @@ nav {
     font-weight: 600;
     font-size: 0.95rem;
     letter-spacing: 0.01em;
+    color: var(--fg);
+    text-decoration: none;
 }
 
 nav ul {
